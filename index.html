@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国百年国耻历史 | China's Century of Humiliation</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="通过交互式地图、3D场景和时间线动画，全方位了解中国百年国耻历史（1839-1949）。客观记录外国干涉、不平等条约、领土丧失和民族危机，以史为鉴，珍爱和平。">
+    <meta name="keywords" content="中国历史,百年国耻,鸦片战争,不平等条约,抗日战争,历史教育,3D场景,交互式地图,时间线动画,Century of Humiliation,Chinese History">
+    <meta name="author" content="中国百年国耻历史项目">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://china-century-humiliation.com/">
+    <meta property="og:title" content="中国百年国耻历史 | China's Century of Humiliation">
+    <meta property="og:description" content="通过交互式地图、3D场景和时间线动画，全方位了解中国百年国耻历史（1839-1949）。以史为鉴，珍爱和平。">
+    <meta property="og:image" content="https://china-century-humiliation.com/og-image.jpg">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:locale:alternate" content="ja_JP">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://china-century-humiliation.com/">
+    <meta name="twitter:title" content="中国百年国耻历史 | China's Century of Humiliation">
+    <meta name="twitter:description" content="通过交互式地图、3D场景和时间线动画，全方位了解中国百年国耻历史（1839-1949）。以史为鉴，珍爱和平。">
+    <meta name="twitter:image" content="https://china-century-humiliation.com/twitter-image.jpg">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#001a0d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="百年国耻历史">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23001a0d'/><text y='70' font-size='70' fill='%2300ff66'>🕊️</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23001a0d'/><text y='70' font-size='70' fill='%2300ff66'>🕊️</text></svg>">
+    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">加载中...</p>
+        </div>
+    </div>
+
+    <!-- 页面滚动进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- 跳转到主内容（无障碍） -->
+    <a href="#main-content" class="skip-to-content">跳转到主内容</a>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>百年国耻历史</h1>
+                <p class="subtitle">Century of Humiliation 1839-1949</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">首页</a></li>
+                <li><a href="#about" class="nav-link">关于</a></li>
+                <li><a href="#modules" class="nav-link">功能模块</a></li>
+                <li><a href="#timeline" class="nav-link">历史脉络</a></li>
+                <li><a href="#resources" class="nav-link">资源</a></li>
+            </ul>
+            <div class="nav-search-box">
+                <input type="text" class="nav-search-input" id="navSearchInput" placeholder="搜索历史事件..." readonly>
+                <span class="nav-search-icon">🔍</span>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+            </div>
+            <!-- 主题切换器 -->
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <!-- 移动端菜单按钮 -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h2>菜单</h2>
+            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#home" class="mobile-nav-link">首页</a></li>
+            <li><a href="#about" class="mobile-nav-link">关于</a></li>
+            <li><a href="#modules" class="mobile-nav-link">功能模块</a></li>
+            <li><a href="#timeline" class="mobile-nav-link">历史脉络</a></li>
+            <li><a href="#resources" class="mobile-nav-link">资源</a></li>
+        </ul>
+        <div class="mobile-menu-footer">
+            <p>选择语言</p>
+            <div class="mobile-lang-switcher">
+                <button class="mobile-lang-btn active" data-lang="zh">中文</button>
+                <button class="mobile-lang-btn" data-lang="en">EN</button>
+                <button class="mobile-lang-btn" data-lang="ja">日本語</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchClose">&times;</button>
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索历史事件...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <span>↑</span>
+    </button>
+
+    <!-- Toast 通知容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div id="main-content"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">中国百年国耻历史</h1>
+            <p class="hero-subtitle">China's Century of Humiliation (1839-1949)</p>
+            <p class="hero-description">
+                通过交互式地图、3D场景和时间线动画，全方位了解这段改变中国命运的历史时期
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">27</span>
+                    <span class="stat-label">历史事件</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">9</span>
+                    <span class="stat-label">3D场景</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">110</span>
+                    <span class="stat-label">年时间跨度</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">语言支持</span>
+                </div>
+            </div>
+            <div class="hero-actions">
+                <a href="map.html" class="btn btn-primary">开始探索</a>
+                <a href="#modules" class="btn btn-secondary">了解更多</a>
+                <a href="quick-guide.html" class="btn btn-secondary">🎉 新功能指南</a>
+            </div>
+        </div>
+        <div class="hero-decoration">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+    </section>
+
+    <!-- 关于项目 -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">关于本项目</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>教育目的</h3>
+                    <p>
+                        本项目记录了中国历史上的<strong>百年国耻</strong>时期（约1839年至1949年）。
+                        这一时期以外国干涉、不平等条约、领土丧失和民族危机为特征，深刻影响了现代中国的形成。
+                    </p>
+                    <h3>核心价值</h3>
+                    <ul class="value-list">
+                        <li>📚 <strong>客观历史记录</strong> - 基于可靠来源的学术研究</li>
+                        <li>🌍 <strong>全球视角</strong> - 多语言支持，国际化展示</li>
+                        <li>🎨 <strong>创新体验</strong> - 3D场景、互动地图、时间线动画</li>
+                        <li>🎓 <strong>教育导向</strong> - 适合学校、博物馆、个人学习</li>
+                    </ul>
+                </div>
+                <div class="about-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🗺️</div>
+                        <h4>交互式地图</h4>
+                        <p>27个历史事件，地理位置可视化</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎬</div>
+                        <h4>3D历史场景</h4>
+                        <p>9个精美场景，沉浸式体验</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏱️</div>
+                        <h4>时间线动画</h4>
+                        <p>110年历史，动态展示</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h4>多语言支持</h4>
+                        <p>中文、英文、日文三语</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能模块 -->
+    <section id="modules" class="modules-section">
+        <div class="container">
+            <h2 class="section-title">三大核心模块</h2>
+            <p class="section-subtitle">通过不同维度，深度探索百年历史</p>
+            
+            <div class="modules-grid">
+                <!-- 模块1：交互式地图 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon">🗺️</div>
+                        <h3>交互式历史地图</h3>
+                    </div>
+                    <div class="module-body">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250'%3E%3Crect fill='%23001a0d' width='400' height='250'/%3E%3Ccircle cx='200' cy='125' r='60' fill='%2300ff66' opacity='0.2'/%3E%3Ctext x='200' y='135' font-family='Arial' font-size='24' fill='%2300ff66' text-anchor='middle'%3E地图视图%3C/text%3E%3C/svg%3E" alt="交互式地图" class="module-image">
+                        <ul class="module-features">
+                            <li>✓ 27个历史事件标记</li>
+                            <li>✓ 时间轴动态筛选（1839-1949）</li>
+                            <li>✓ 4种事件分类</li>
+                            <li>✓ 灵动岛实时统计</li>
+                        </ul>
+                        <div class="module-stats">
+                            <span class="stat-badge stat-text">中国本土 15+城市</span>
+                            <span class="stat-badge stat-text">国际地点 7个</span>
+                        </div>
+                        <a href="map.html" class="module-btn">进入地图 →</a>
+                    </div>
+                </div>
+
+                <!-- 模块2：3D场景 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon">🎬</div>
+                        <h3>3D历史场景</h3>
+                    </div>
+                    <div class="module-body">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250'%3E%3Crect fill='%23001a0d' width='400' height='250'/%3E%3Cpolygon points='200,80 260,140 200,200 140,140' fill='%2300ff66' opacity='0.3'/%3E%3Ctext x='200' y='235' font-family='Arial' font-size='24' fill='%2300ff66' text-anchor='middle'%3E3D场景%3C/text%3E%3C/svg%3E" alt="3D场景" class="module-image">
+                        <ul class="module-features">
+                            <li>✓ 9个精美历史场景</li>
+                            <li>✓ Three.js实时渲染</li>
+                            <li>✓ 动态光影效果</li>
+                            <li>✓ 沉浸式体验</li>
+                        </ul>
+                        <div class="module-stats">
+                            <span class="stat-badge stat-text">500+ 3D对象</span>
+                            <span class="stat-badge stat-text">20+ 动画效果</span>
+                        </div>
+                        <a href="3d-scene.html" class="module-btn">进入3D场景 →</a>
+                    </div>
+                </div>
+
+                <!-- 模块3：时间线 -->
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-icon">⏱️</div>
+                        <h3>时间线动画</h3>
+                    </div>
+                    <div class="module-body">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250'%3E%3Crect fill='%23001a0d' width='400' height='250'/%3E%3Cline x1='50' y1='125' x2='350' y2='125' stroke='%2300ff66' stroke-width='3'/%3E%3Ccircle cx='100' cy='125' r='8' fill='%2300ff66'/%3E%3Ccircle cx='200' cy='125' r='8' fill='%2300ff66'/%3E%3Ccircle cx='300' cy='125' r='8' fill='%2300ff66'/%3E%3Ctext x='200' y='170' font-family='Arial' font-size='24' fill='%2300ff66' text-anchor='middle'%3E时间线%3C/text%3E%3C/svg%3E" alt="时间线" class="module-image">
+                        <ul class="module-features">
+                            <li>✓ 自动播放功能</li>
+                            <li>✓ 事件卡片动画</li>
+                            <li>✓ 速度可调节</li>
+                            <li>✓ 进度可视化</li>
+                        </ul>
+                        <div class="module-stats">
+                            <span class="stat-badge stat-text">110年历史</span>
+                            <span class="stat-badge stat-text">流畅动画</span>
+                        </div>
+                        <a href="timeline-animation.html" class="module-btn">查看时间线 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史脉络 -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">历史脉络</h2>
+            <p class="section-subtitle">从鸦片战争到新中国成立</p>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-event-id="opium-war-1">
+                    <div class="timeline-year">1839-1842</div>
+                    <div class="timeline-content">
+                        <h4>第一次鸦片战争</h4>
+                        <p>百年国耻的开端，《南京条约》签订</p>
+                        <button class="bookmark-btn" data-event-id="opium-war-1" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="opium-war-2">
+                    <div class="timeline-year">1856-1860</div>
+                    <div class="timeline-content">
+                        <h4>第二次鸦片战争</h4>
+                        <p>圆明园被焚毁，北京条约签订</p>
+                        <button class="bookmark-btn" data-event-id="opium-war-2" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="sino-japanese-war">
+                    <div class="timeline-year">1894-1895</div>
+                    <div class="timeline-content">
+                        <h4>甲午战争</h4>
+                        <p>北洋水师全军覆没，《马关条约》签订</p>
+                        <button class="bookmark-btn" data-event-id="sino-japanese-war" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="boxer-rebellion">
+                    <div class="timeline-year">1900</div>
+                    <div class="timeline-content">
+                        <h4>八国联军侵华</h4>
+                        <p>《辛丑条约》签订，赔款4.5亿两白银</p>
+                        <button class="bookmark-btn" data-event-id="boxer-rebellion" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="xinhai-revolution">
+                    <div class="timeline-year">1911</div>
+                    <div class="timeline-content">
+                        <h4>辛亥革命</h4>
+                        <p>推翻清朝，建立中华民国</p>
+                        <button class="bookmark-btn" data-event-id="xinhai-revolution" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="may-fourth-movement">
+                    <div class="timeline-year">1919</div>
+                    <div class="timeline-content">
+                        <h4>五四运动</h4>
+                        <p>新文化运动，思想启蒙</p>
+                        <button class="bookmark-btn" data-event-id="may-fourth-movement" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item" data-event-id="anti-japanese-war">
+                    <div class="timeline-year">1937-1945</div>
+                    <div class="timeline-content">
+                        <h4>抗日战争</h4>
+                        <p>全民族抗战，最终胜利</p>
+                        <button class="bookmark-btn" data-event-id="anti-japanese-war" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="timeline-item highlight" data-event-id="founding-ceremony">
+                    <div class="timeline-year">1949</div>
+                    <div class="timeline-content">
+                        <h4>开国大典</h4>
+                        <p>中华人民共和国成立，百年国耻终结</p>
+                        <button class="bookmark-btn" data-event-id="founding-ceremony" aria-label="收藏">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 收藏夹浮动按钮 -->
+    <button class="bookmarks-toggle" id="bookmarksToggle" aria-label="我的收藏">
+        <span class="bookmarks-icon">★</span>
+        <span class="bookmarks-count" id="bookmarksCount">0</span>
+    </button>
+
+    <!-- 分享按钮 -->
+    <button class="share-btn" id="shareBtn" aria-label="分享页面">
+        <svg class="share-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 5.12548 15.0077 5.24917 15.0227 5.37061L8.08259 9.19738C7.54305 8.46995 6.71937 8 5.78571 8C4.24689 8 3 9.34315 3 11C3 12.6569 4.24689 14 5.78571 14C6.71937 14 7.54305 13.53 8.08259 12.8026L15.0227 16.6294C15.0077 16.7508 15 16.8745 15 17C15 18.6569 16.3431 20 18 20C19.6569 20 21 18.6569 21 17C21 15.3431 19.6569 14 18 14C17.0663 14 16.2426 14.47 15.7031 15.1974L8.76299 11.3706C8.77796 11.2492 8.78571 11.1255 8.78571 11C8.78571 10.8745 8.77796 10.7508 8.76299 10.6294L15.7031 6.80262C16.2426 7.53005 17.0663 8 18 8Z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- 导出文档按钮 -->
+    <button class="export-btn" id="exportBtn" aria-label="导出文档">
+        <svg class="export-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 10L12 15M12 15L7 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+            
+            <!-- 收藏夹面板 -->
+            <div class="bookmarks-panel" id="bookmarksPanel">
+                <div class="bookmarks-header">
+                    <h3>我的收藏</h3>
+                    <button class="bookmarks-close" id="bookmarksClose">&times;</button>
+                </div>
+                <div class="bookmarks-list" id="bookmarksList">
+                    <div class="bookmarks-empty">暂无收藏，点击事件旁的 ☆ 收藏</div>
+                </div>
+                <div class="bookmarks-footer">
+                    <button class="clear-bookmarks" id="clearBookmarks">清空收藏</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资源和文档 -->
+    <section id="resources" class="resources-section">
+        <div class="container">
+            <h2 class="section-title">学习资源</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h4>📖 文档资料</h4>
+                    <ul>
+                        <li><a href="docs/zh/timeline.md">中文时间线</a></li>
+                        <li><a href="docs/en/timeline.md">English Timeline</a></li>
+                        <li><a href="docs/ja/timeline.md">日本語タイムライン</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h4>📚 事件详情</h4>
+                    <ul>
+                        <li><a href="docs/zh/events/">中文事件</a></li>
+                        <li><a href="docs/en/events/">English Events</a></li>
+                        <li><a href="docs/ja/events/">日本語イベント</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h4>📜 条约分析</h4>
+                    <ul>
+                        <li><a href="docs/zh/treaties.md">不平等条约</a></li>
+                        <li><a href="docs/zh/impact.md">历史影响</a></li>
+                        <li><a href="docs/zh/references.md">参考文献</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h4>ℹ️ 项目信息</h4>
+                    <ul>
+                        <li><a href="README.md">项目说明</a></li>
+                        <li><a href="PROJECT_SUMMARY.md">项目总结</a></li>
+                        <li><a href="LICENSE">开源协议</a></li>
+                    </ul>
+                </div>
+                <div class="resource-card">
+                    <h4>🎉 新功能</h4>
+                    <ul>
+                        <li><a href="quick-guide.html">功能使用指南</a></li>
+                        <li><a href="demo.html">互动功能演示</a></li>
+                        <li><a href="FEATURES.md">详细功能文档</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>关于项目</h4>
+                    <p>本项目旨在通过现代科技手段，客观记录和展示中国百年国耻历史，以史为鉴，面向未来。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="map.html">交互式地图</a></li>
+                        <li><a href="3d-scene.html">3D历史场景</a></li>
+                        <li><a href="timeline-animation.html">时间线动画</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>多语言</h4>
+                    <ul>
+                        <li><a href="#">中文 (Chinese)</a></li>
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">日本語 (Japanese)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 中国百年国耻历史项目 | 以史为鉴，珍爱和平 🕊️</p>
+                <p>Licensed under <a href="LICENSE" target="_blank">CC BY-SA 4.0</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>

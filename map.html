@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互式历史地图 | Interactive Historical Map | インタラクティブ歴史地図</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #1e293b;
+            color: white;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-btn {
+            padding: 8px 16px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background: white;
+            color: #1e40af;
+        }
+
+        .language-btn.active {
+            background: white;
+            color: #1e40af;
+        }
+
+        #map {
+            width: 100%;
+            height: calc(100vh - 80px);
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 30px;
+            color: white;
+        }
+
+        .info-panel.active {
+            right: 0;
+            display: block;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .info-panel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #de2910;
+        }
+
+        .info-panel .year {
+            font-size: 1.2rem;
+            color: #dc2626;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .info-panel .description {
+            line-height: 1.6;
+            margin-bottom: 16px;
+            color: #de2910;
+        }
+
+        .info-panel .consequences {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .info-panel .consequences h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #64748b;
+        }
+
+        .info-panel .consequences ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-panel .consequences li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #de2910;
+            font-size: 0.9rem;
+        }
+
+        .info-panel .consequences li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #b91c1c;
+            transform: scale(1.1);
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .legend h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .legend-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .marker-war { background: #dc2626; }
+        .marker-treaty { background: #7c3aed; }
+        .marker-battle { background: #ea580c; }
+        .marker-event { background: #2563eb; }
+
+        .category-filter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .category-filter h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            padding: 8px 16px;
+            margin-bottom: 8px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            color: #475569;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .filter-btn:hover {
+            background: #f1f5f9;
+            border-color: #3b82f6;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .timeline-slider {
+            position: absolute;
+            bottom: 250px;
+            left: 20px;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 280px;
+        }
+
+        .timeline-slider h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        #yearSlider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #3b82f6 0%, #3b82f6 100%);
+            margin-bottom: 12px;
+        }
+
+        #yearSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #yearSlider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .year-display {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        #selectedYear {
+            color: #3b82f6;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #dc2626;
+        }
+
+        /* 灵动岛样式 */
+        .dynamic-island {
+            position: fixed;
+            top: 20px;
+            left: 55%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .island-compact {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 12px 24px;
+            border-radius: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .island-compact:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+
+        .island-icon {
+            font-size: 1.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .island-info {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .island-info span {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .island-label {
+            font-size: 0.85rem !important;
+            color: #94a3b8 !important;
+            font-weight: 500 !important;
+        }
+
+        .island-year {
+            color: #fbbf24;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .island-expanded {
+            display: none;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            min-width: 400px;
+            animation: expandIsland 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes expandIsland {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .dynamic-island.expanded .island-compact {
+            display: none;
+        }
+
+        .dynamic-island.expanded .island-expanded {
+            display: block;
+        }
+
+        .island-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .island-header h3 {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .island-close {
+            background: rgba(239, 68, 68, 0.2);
+            border: none;
+            color: #ef4444;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .island-close:hover {
+            background: #ef4444;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .island-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .island-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .island-expanded {
+                min-width: 90vw;
+            }
+            
+            .island-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .island-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 自定义标记样式 */
+        .custom-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-marker:hover {
+            transform: scale(1.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .info-panel {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+
+            .legend {
+                bottom: 10px;
+                left: 10px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="pageTitle">交互式历史地图 - 中国百年国耻 (1839-1949)</h1>
+        <div class="language-selector">
+            <button class="language-btn active" data-lang="zh">中文</button>
+            <button class="language-btn" data-lang="en">English</button>
+            <button class="language-btn" data-lang="ja">日本語</button>
+        </div>
+    </div>
+
+    <!-- 灵动岛 -->
+    <div class="dynamic-island" id="dynamicIsland">
+        <div class="island-compact" id="islandCompact">
+            <div class="island-icon">📍</div>
+            <div class="island-info">
+                <span id="islandCount">20</span>
+                <span class="island-label" id="islandLabel">事件</span>
+            </div>
+            <div class="island-icon">📅</div>
+            <div class="island-year" id="islandYear">1949</div>
+        </div>
+        
+        <div class="island-expanded" id="islandExpanded">
+            <div class="island-header">
+                <h3 id="islandTitle">地图控制中心</h3>
+                <button class="island-close" id="islandClose">×</button>
+            </div>
+            
+            <div class="island-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="statTotal">20</div>
+                    <div class="stat-label" id="statTotalLabel">总事件</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statVisible">20</div>
+                    <div class="stat-label" id="statVisibleLabel">当前显示</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statYear">1949</div>
+                    <div class="stat-label" id="statYearLabel">年份</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="statCategory">全部</div>
+                    <div class="stat-label" id="statCategoryLabel">分类</div>
+                </div>
+            </div>
+            
+            <div class="island-actions">
+                <button class="action-btn" id="actionReset">
+                    <span class="action-icon">🔄</span>
+                    <span id="actionResetText">重置全部</span>
+                </button>
+                <button class="action-btn" id="actionRandom">
+                    <span class="action-icon">🎲</span>
+                    <span id="actionRandomText">随机事件</span>
+                </button>
+                <button class="action-btn" id="actionTimeline">
+                    <span class="action-icon">⏱️</span>
+                    <span id="actionTimelineText">时间线</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="info-panel" id="infoPanel">
+        <button class="close-btn" onclick="closeInfoPanel()">×</button>
+        <h2 id="eventTitle"></h2>
+        <div class="year" id="eventYear"></div>
+        <div class="description" id="eventDescription"></div>
+        <div class="consequences">
+            <h3 id="consequencesTitle">主要后果</h3>
+            <ul id="consequencesList"></ul>
+        </div>
+    </div>
+
+    <div class="legend">
+        <h3 id="legendTitle">图例</h3>
+        <div class="legend-item">
+            <div class="legend-marker marker-war"></div>
+            <span id="legendWar">战争</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-marker marker-treaty"></div>
+            <span id="legendTreaty">条约/外交</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-marker marker-battle"></div>
+            <span id="legendBattle">战役/起义</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-marker marker-event"></div>
+            <span id="legendEvent">重大事件</span>
+        </div>
+    </div>
+
+    <div class="timeline-slider">
+        <h3 id="timelineTitle">时间范围</h3>
+        <div class="slider-labels">
+            <span id="startYear">1839</span>
+            <span id="endYear">1949</span>
+        </div>
+        <input type="range" id="yearSlider" min="1839" max="1949" value="1949" step="1">
+        <div class="year-display">
+            <span id="selectedYearLabel">显示到:</span>
+            <span id="selectedYear">1949</span>
+        </div>
+        <button class="reset-btn" id="resetTimeline">重置</button>
+    </div>
+
+    <div class="category-filter">
+        <h3 id="filterTitle">筛选</h3>
+        <button class="filter-btn active" data-category="all" id="filterAll">全部</button>
+        <button class="filter-btn" data-category="war" id="filterWar">战争</button>
+        <button class="filter-btn" data-category="treaty" id="filterTreaty">条约</button>
+        <button class="filter-btn" data-category="battle" id="filterBattle">战役</button>
+        <button class="filter-btn" data-category="event" id="filterEvent">事件</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能演示 | 中国百年国耻历史</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 2rem;
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .demo-header h1 {
+            font-size: 3rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .demo-card {
+            background: rgba(0, 26, 13, 0.6);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .demo-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-green-strong);
+            transform: translateY(-5px);
+        }
+
+        .demo-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .demo-card h3 {
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .demo-button {
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .demo-button:hover {
+            background: var(--accent-green-light);
+            transform: scale(1.05);
+        }
+
+        .feature-badge {
+            display: inline-block;
+            background: rgba(0, 255, 102, 0.2);
+            color: var(--accent-green);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .stats-banner {
+            background: linear-gradient(135deg, rgba(0, 255, 102, 0.1) 0%, rgba(0, 255, 102, 0.05) 100%);
+            border: 2px solid var(--accent-green);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .stats-banner h2 {
+            color: var(--accent-green);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>功能演示</h1>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h2>菜单</h2>
+            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" class="mobile-nav-link">返回首页</a></li>
+            <li><a href="quick-guide.html" class="mobile-nav-link">使用指南</a></li>
+        </ul>
+    </div>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchClose">&times;</button>
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索历史事件...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <span>↑</span>
+    </button>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎮 互动功能演示</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem;">
+                点击下方卡片体验各项功能
+            </p>
+        </div>
+
+        <div class="stats-banner">
+            <h2>✨ 功能统计</h2>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="stat-value">8</span>
+                    <span class="stat-text">新增功能</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">3</span>
+                    <span class="stat-text">快捷键</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-text">免费开源</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value">0</span>
+                    <span class="stat-text">外部依赖</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-grid">
+            <!-- 主题切换 -->
+            <div class="demo-card" onclick="toggleThemeDemo()">
+                <span class="demo-icon">🌓</span>
+                <h3>主题切换</h3>
+                <p>在深色和浅色主题之间切换，主题偏好自动保存</p>
+                <span class="feature-badge">点击体验</span>
+                <button class="demo-button" style="margin-top: 1rem;">切换主题</button>
+            </div>
+
+            <!-- 搜索功能 -->
+            <div class="demo-card" onclick="openSearchDemo()">
+                <span class="demo-icon">🔍</span>
+                <h3>搜索功能</h3>
+                <p>快速搜索历史事件，支持模糊匹配和快捷键</p>
+                <span class="feature-badge">Ctrl/Cmd + K</span>
+                <button class="demo-button" style="margin-top: 1rem;">打开搜索</button>
+            </div>
+
+            <!-- Toast通知 -->
+            <div class="demo-card" onclick="showToastDemo()">
+                <span class="demo-icon">🔔</span>
+                <h3>Toast 通知</h3>
+                <p>优雅的消息提示，支持成功、错误、信息三种类型</p>
+                <span class="feature-badge">点击测试</span>
+                <button class="demo-button" style="margin-top: 1rem;">显示通知</button>
+            </div>
+
+            <!-- 收藏功能 -->
+            <div class="demo-card" onclick="window.location.href='index.html#timeline'">
+                <span class="demo-icon">⭐</span>
+                <h3>收藏功能</h3>
+                <p>收藏感兴趣的历史事件，数据持久化保存</p>
+                <span class="feature-badge">跳转体验</span>
+                <button class="demo-button" style="margin-top: 1rem;">前往时间线</button>
+            </div>
+
+            <!-- 返回顶部 -->
+            <div class="demo-card" onclick="scrollToBottomDemo()">
+                <span class="demo-icon">⬆️</span>
+                <h3>返回顶部</h3>
+                <p>滚动超过300px自动显示，平滑滚动回顶部</p>
+                <span class="feature-badge">向下滚动查看</span>
+                <button class="demo-button" style="margin-top: 1rem;">滚动到底部</button>
+            </div>
+
+            <!-- 移动菜单 -->
+            <div class="demo-card" onclick="showMobileMenuInfo()">
+                <span class="demo-icon">📱</span>
+                <h3>移动端菜单</h3>
+                <p>响应式汉堡菜单，适配移动设备</p>
+                <span class="feature-badge">调整窗口大小</span>
+                <button class="demo-button" style="margin-top: 1rem;">查看说明</button>
+            </div>
+
+            <!-- 懒加载 -->
+            <div class="demo-card" onclick="showLazyLoadInfo()">
+                <span class="demo-icon">🖼️</span>
+                <h3>图片懒加载</h3>
+                <p>优化页面性能，图片进入视口时才加载</p>
+                <span class="feature-badge">自动优化</span>
+                <button class="demo-button" style="margin-top: 1rem;">查看详情</button>
+            </div>
+
+            <!-- 快捷键 -->
+            <div class="demo-card" onclick="showShortcutsInfo()">
+                <span class="demo-icon">⌨️</span>
+                <h3>键盘快捷键</h3>
+                <p>使用快捷键提升操作效率</p>
+                <span class="feature-badge">按 ESC 试试</span>
+                <button class="demo-button" style="margin-top: 1rem;">查看快捷键</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="index.html" class="btn btn-primary">返回首页</a>
+            <a href="quick-guide.html" class="btn btn-secondary" style="margin-left: 1rem;">查看指南</a>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        // 确保页面加载后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 主题按钮已由 index.js 处理
+        });
+
+        function toggleThemeDemo() {
+            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            showToast(isLight ? '已切换到浅色主题 ☀️' : '已切换到深色主题 🌙', 'success');
+        }
+
+        function openSearchDemo() {
+            const searchOverlay = document.getElementById('searchOverlay');
+            if (searchOverlay) {
+                searchOverlay.classList.add('active');
+                document.getElementById('searchInput').focus();
+            } else {
+                showToast('请在首页体验搜索功能', 'info');
+            }
+        }
+
+        let toastCount = 0;
+        function showToastDemo() {
+            const types = ['success', 'error', 'info'];
+            const messages = [
+                '这是一条成功消息 ✓',
+                '这是一条错误消息 ✗',
+                '这是一条信息提示 ℹ'
+            ];
+            const type = types[toastCount % 3];
+            const message = messages[toastCount % 3];
+            showToast(message, type);
+            toastCount++;
+        }
+
+        function scrollToBottomDemo() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+            showToast('向下滚动后，右下角会出现返回顶部按钮', 'info');
+        }
+
+        function showMobileMenuInfo() {
+            showToast('请将浏览器窗口调整到手机大小，或在移动设备上访问', 'info');
+        }
+
+        function showLazyLoadInfo() {
+            showToast('图片懒加载已自动启用，优化了页面加载性能', 'success');
+        }
+
+        function showShortcutsInfo() {
+            showToast('快捷键：Ctrl/Cmd+K 搜索 | ESC 关闭 | Ctrl/Cmd+/ 菜单', 'info');
+        }
+
+        // 功能演示页面的多语言翻译
+        const demoTranslations = {
+            zh: {
+                pageTitle: '互动功能演示',
+                pageSubtitle: '点击下方卡片体验各项功能',
+                statsTitle: '功能统计',
+                stat1: '新增功能',
+                stat2: '快捷键',
+                stat3: '免费开源',
+                stat4: '外部依赖',
+                
+                card1Title: '主题切换',
+                card1Desc: '在深色和浅色主题之间切换，主题偏好自动保存',
+                card1Badge: '点击体验',
+                card1Btn: '切换主题',
+                
+                card2Title: '搜索功能',
+                card2Desc: '快速搜索历史事件，支持模糊匹配和快捷键',
+                card2Badge: 'Ctrl/Cmd + K',
+                card2Btn: '打开搜索',
+                
+                card3Title: 'Toast 通知',
+                card3Desc: '优雅的消息提示，支持成功、错误、信息三种类型',
+                card3Badge: '点击测试',
+                card3Btn: '显示通知',
+                
+                card4Title: '收藏功能',
+                card4Desc: '收藏感兴趣的历史事件，数据持久化保存',
+                card4Badge: '跳转体验',
+                card4Btn: '前往时间线',
+                
+                card5Title: '返回顶部',
+                card5Desc: '滚动超过300px自动显示，平滑滚动回顶部',
+                card5Badge: '向下滚动查看',
+                card5Btn: '滚动到底部',
+                
+                card6Title: '移动端菜单',
+                card6Desc: '响应式汉堡菜单，适配移动设备',
+                card6Badge: '调整窗口大小',
+                card6Btn: '查看说明',
+                
+                card7Title: '图片懒加载',
+                card7Desc: '优化页面性能，图片进入视口时才加载',
+                card7Badge: '自动优化',
+                card7Btn: '查看详情',
+                
+                card8Title: '键盘快捷键',
+                card8Desc: '使用快捷键提升操作效率',
+                card8Badge: '按 ESC 试试',
+                card8Btn: '查看快捷键',
+                
+                btnHome: '返回首页',
+                btnGuide: '查看指南',
+                welcomeMsg: '欢迎来到功能演示页面！点击卡片体验各项功能'
+            },
+            en: {
+                pageTitle: 'Interactive Feature Demo',
+                pageSubtitle: 'Click the cards below to experience each feature',
+                statsTitle: 'Feature Statistics',
+                stat1: 'New Features',
+                stat2: 'Shortcuts',
+                stat3: 'Free & Open Source',
+                stat4: 'External Dependencies',
+                
+                card1Title: 'Theme Toggle',
+                card1Desc: 'Switch between dark and light themes, preferences are auto-saved',
+                card1Badge: 'Click to Try',
+                card1Btn: 'Toggle Theme',
+                
+                card2Title: 'Search Function',
+                card2Desc: 'Quickly search historical events with fuzzy matching and shortcuts',
+                card2Badge: 'Ctrl/Cmd + K',
+                card2Btn: 'Open Search',
+                
+                card3Title: 'Toast Notifications',
+                card3Desc: 'Elegant message prompts supporting success, error, and info types',
+                card3Badge: 'Click to Test',
+                card3Btn: 'Show Notification',
+                
+                card4Title: 'Bookmark Feature',
+                card4Desc: 'Bookmark interesting historical events with persistent storage',
+                card4Badge: 'Jump to Try',
+                card4Btn: 'Go to Timeline',
+                
+                card5Title: 'Back to Top',
+                card5Desc: 'Auto-shows after 300px scroll, smooth scroll to top',
+                card5Badge: 'Scroll Down to See',
+                card5Btn: 'Scroll to Bottom',
+                
+                card6Title: 'Mobile Menu',
+                card6Desc: 'Responsive hamburger menu adapted for mobile devices',
+                card6Badge: 'Resize Window',
+                card6Btn: 'View Instructions',
+                
+                card7Title: 'Image Lazy Loading',
+                card7Desc: 'Optimizes page performance, loads images when entering viewport',
+                card7Badge: 'Auto Optimized',
+                card7Btn: 'View Details',
+                
+                card8Title: 'Keyboard Shortcuts',
+                card8Desc: 'Use shortcuts to improve operation efficiency',
+                card8Badge: 'Press ESC to Try',
+                card8Btn: 'View Shortcuts',
+                
+                btnHome: 'Back to Home',
+                btnGuide: 'View Guide',
+                welcomeMsg: 'Welcome to the feature demo page! Click cards to experience features'
+            },
+            ja: {
+                pageTitle: 'インタラクティブ機能デモ',
+                pageSubtitle: '下のカードをクリックして各機能を体験してください',
+                statsTitle: '機能統計',
+                stat1: '新機能',
+                stat2: 'ショートカット',
+                stat3: '無料オープンソース',
+                stat4: '外部依存',
+                
+                card1Title: 'テーマ切り替え',
+                card1Desc: 'ダークテーマとライトテーマを切り替え、設定は自動保存されます',
+                card1Badge: 'クリックして試す',
+                card1Btn: 'テーマ切り替え',
+                
+                card2Title: '検索機能',
+                card2Desc: '歴史的イベントを素早く検索、曖昧検索とショートカットをサポート',
+                card2Badge: 'Ctrl/Cmd + K',
+                card2Btn: '検索を開く',
+                
+                card3Title: 'トースト通知',
+                card3Desc: '成功、エラー、情報の3種類をサポートする優雅なメッセージプロンプト',
+                card3Badge: 'クリックしてテスト',
+                card3Btn: '通知を表示',
+                
+                card4Title: 'ブックマーク機能',
+                card4Desc: '興味のある歴史的イベントをブックマーク、データは永続的に保存',
+                card4Badge: 'ジャンプして試す',
+                card4Btn: 'タイムラインへ',
+                
+                card5Title: 'トップに戻る',
+                card5Desc: '300pxスクロール後に自動表示、トップへスムーズにスクロール',
+                card5Badge: '下にスクロールして確認',
+                card5Btn: '下までスクロール',
+                
+                card6Title: 'モバイルメニュー',
+                card6Desc: 'モバイルデバイスに適応したレスポンシブハンバーガーメニュー',
+                card6Badge: 'ウィンドウサイズ変更',
+                card6Btn: '説明を見る',
+                
+                card7Title: '画像遅延読み込み',
+                card7Desc: 'ページパフォーマンスを最適化、ビューポートに入ったときに画像を読み込み',
+                card7Badge: '自動最適化',
+                card7Btn: '詳細を見る',
+                
+                card8Title: 'キーボードショートカット',
+                card8Desc: 'ショートカットを使用して操作効率を向上',
+                card8Badge: 'ESCを押して試す',
+                card8Btn: 'ショートカットを見る',
+                
+                btnHome: 'ホームに戻る',
+                btnGuide: 'ガイドを見る',
+                welcomeMsg: '機能デモページへようこそ！カードをクリックして機能を体験してください'
+            }
+        };
+
+        // 应用翻译
+        function applyDemoTranslation(lang) {
+            const t = demoTranslations[lang];
+            if (!t) return;
+
+            // 更新页面标题
+            document.querySelector('.demo-header h1').textContent = '🎮 ' + t.pageTitle;
+            document.querySelector('.demo-header p').textContent = t.pageSubtitle;
+
+            // 更新统计标题
+            document.querySelector('.stats-banner h2').textContent = '✨ ' + t.statsTitle;
+
+            // 更新统计数据
+            const statTexts = document.querySelectorAll('.stat-text');
+            if (statTexts[0]) statTexts[0].textContent = t.stat1;
+            if (statTexts[1]) statTexts[1].textContent = t.stat2;
+            if (statTexts[2]) statTexts[2].textContent = t.stat3;
+            if (statTexts[3]) statTexts[3].textContent = t.stat4;
+
+            // 更新所有卡片
+            const cards = document.querySelectorAll('.demo-card');
+            const cardData = [
+                { title: t.card1Title, desc: t.card1Desc, badge: t.card1Badge, btn: t.card1Btn },
+                { title: t.card2Title, desc: t.card2Desc, badge: t.card2Badge, btn: t.card2Btn },
+                { title: t.card3Title, desc: t.card3Desc, badge: t.card3Badge, btn: t.card3Btn },
+                { title: t.card4Title, desc: t.card4Desc, badge: t.card4Badge, btn: t.card4Btn },
+                { title: t.card5Title, desc: t.card5Desc, badge: t.card5Badge, btn: t.card5Btn },
+                { title: t.card6Title, desc: t.card6Desc, badge: t.card6Badge, btn: t.card6Btn },
+                { title: t.card7Title, desc: t.card7Desc, badge: t.card7Badge, btn: t.card7Btn },
+                { title: t.card8Title, desc: t.card8Desc, badge: t.card8Badge, btn: t.card8Btn }
+            ];
+
+            cards.forEach((card, index) => {
+                const data = cardData[index];
+                const h3 = card.querySelector('h3');
+                const p = card.querySelector('p');
+                const badge = card.querySelector('.feature-badge');
+                const btn = card.querySelector('.demo-button');
+                
+                if (h3) h3.textContent = data.title;
+                if (p) p.textContent = data.desc;
+                if (badge) badge.textContent = data.badge;
+                if (btn) btn.textContent = data.btn;
+            });
+
+            // 更新底部按钮
+            const btns = document.querySelectorAll('.btn');
+            if (btns[0]) btns[0].textContent = t.btnHome;
+            if (btns[1]) btns[1].textContent = t.btnGuide;
+
+            // 保存语言偏好
+            localStorage.setItem('demoLanguage', lang);
+        }
+
+        // 监听语言切换
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                applyDemoTranslation(lang);
+            });
+        });
+
+        // 加载保存的语言
+        const savedLang = localStorage.getItem('demoLanguage') || localStorage.getItem('preferredLanguage') || 'zh';
+        setTimeout(() => {
+            applyDemoTranslation(savedLang);
+        }, 100);
+
+        // 欢迎消息
+        setTimeout(() => {
+            const lang = localStorage.getItem('demoLanguage') || 'zh';
+            const msg = demoTranslations[lang].welcomeMsg;
+            showToast(msg, 'success');
+        }, 500);
+    </script>
+</body>
+</html>
