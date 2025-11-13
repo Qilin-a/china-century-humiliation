@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能快速指南 | 中国百年国耻历史</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .guide-container {
+            max-width: 1000px;
+            margin: 100px auto 50px;
+            padding: 2rem;
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .guide-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .guide-section {
+            background: rgba(0, 26, 13, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .guide-section:hover {
+            border-color: var(--accent-green);
+            box-shadow: var(--shadow-green);
+        }
+
+        .guide-section h2 {
+            color: var(--accent-green);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .guide-section h3 {
+            color: var(--accent-green-light);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .guide-section p, .guide-section li {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .guide-section ul {
+            margin-left: 2rem;
+        }
+
+        .shortcut-key {
+            background: rgba(0, 255, 102, 0.2);
+            color: var(--accent-green);
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+        }
+
+        .demo-box {
+            background: rgba(0, 255, 102, 0.05);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--accent-green-light);
+            transform: translateY(-3px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>功能指南</h1>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ja">日本語</button>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h2>菜单</h2>
+            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" class="mobile-nav-link">返回首页</a></li>
+            <li><a href="demo.html" class="mobile-nav-link">功能演示</a></li>
+        </ul>
+    </div>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <button class="search-close" id="searchClose">&times;</button>
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索历史事件...">
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <span>↑</span>
+    </button>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="guide-container">
+        <div class="guide-header">
+            <h1>🎉 新功能快速指南</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem;">
+                探索8个全新的免费功能，提升您的浏览体验
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">8</span>
+                <span class="stat-label">新增功能</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">3</span>
+                <span class="stat-label">快捷键</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">2</span>
+                <span class="stat-label">主题选择</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">免费开源</span>
+            </div>
+        </div>
+
+        <!-- 功能1 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">📱</span> 移动端汉堡菜单</h2>
+            <p>在移动设备上，导航菜单会自动隐藏，点击右上角的三条横线图标即可打开。</p>
+            <h3>特点：</h3>
+            <ul>
+                <li>流畅的滑入滑出动画</li>
+                <li>包含所有导航链接和语言切换</li>
+                <li>点击菜单项自动关闭并跳转</li>
+            </ul>
+        </div>
+
+        <!-- 功能2 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">⬆️</span> 返回顶部按钮</h2>
+            <p>当您向下滚动超过300像素时，右下角会出现一个向上箭头按钮。</p>
+            <div class="demo-box">
+                <strong>使用方法：</strong> 点击按钮即可平滑滚动回页面顶部
+            </div>
+        </div>
+
+        <!-- 功能3 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">🌓</span> 深色/浅色主题切换</h2>
+            <p>点击导航栏右侧的月亮🌙或太阳☀️图标，在深色和浅色主题之间切换。</p>
+            <h3>主题特点：</h3>
+            <ul>
+                <li><strong>深色主题（默认）：</strong>黑绿科技风格，护眼舒适</li>
+                <li><strong>浅色主题：</strong>白绿清新风格，明亮清晰</li>
+                <li>主题偏好自动保存，下次访问时自动应用</li>
+            </ul>
+        </div>
+
+        <!-- 功能4 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">🔔</span> Toast 通知系统</h2>
+            <p>优雅的消息提示，在您进行操作时提供即时反馈。</p>
+            <h3>通知类型：</h3>
+            <ul>
+                <li>✓ 成功通知（绿色边框）</li>
+                <li>✗ 错误通知（红色边框）</li>
+                <li>ℹ 信息通知（蓝色边框）</li>
+            </ul>
+            <p>通知会在3秒后自动消失，也可以点击 × 手动关闭。</p>
+        </div>
+
+        <!-- 功能5 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">🔍</span> 搜索功能</h2>
+            <p>快速查找历史事件和功能模块。</p>
+            <div class="demo-box">
+                <strong>打开搜索：</strong><br>
+                • 点击导航栏的 🔍 图标<br>
+                • 或按 <span class="shortcut-key">Ctrl + K</span> (Mac: <span class="shortcut-key">Cmd + K</span>)
+            </div>
+            <h3>搜索技巧：</h3>
+            <ul>
+                <li>输入关键词即可实时显示结果</li>
+                <li>支持搜索事件标题和描述</li>
+                <li>点击结果自动跳转到对应位置</li>
+                <li>按 <span class="shortcut-key">ESC</span> 关闭搜索框</li>
+            </ul>
+        </div>
+
+        <!-- 功能6 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">⭐</span> 收藏/书签功能</h2>
+            <p>收藏您感兴趣的历史事件，方便日后查看。</p>
+            <h3>如何使用：</h3>
+            <ul>
+                <li>在时间线区域，每个事件右上角都有一个 ☆ 图标</li>
+                <li>点击 ☆ 收藏事件，图标变为 ★</li>
+                <li>点击右侧浮动的 ★ 按钮查看所有收藏</li>
+                <li>在收藏夹中点击事件可快速跳转</li>
+                <li>点击收藏项右上角的 × 删除单个收藏</li>
+                <li>点击"清空收藏"按钮删除所有收藏</li>
+            </ul>
+            <div class="demo-box">
+                <strong>提示：</strong> 收藏数据保存在浏览器本地，不会丢失！
+            </div>
+        </div>
+
+        <!-- 功能7 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">🖼️</span> 图片懒加载</h2>
+            <p>图片只在进入视口时才加载，大幅提升页面加载速度。</p>
+            <h3>优势：</h3>
+            <ul>
+                <li>减少初始加载时间</li>
+                <li>节省网络带宽</li>
+                <li>提升浏览体验</li>
+            </ul>
+        </div>
+
+        <!-- 功能8 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">⌨️</span> 键盘快捷键</h2>
+            <p>使用键盘快捷键，更高效地操作网站。</p>
+            <div class="demo-box">
+                <h3 style="margin-top: 0;">快捷键列表：</h3>
+                <p><span class="shortcut-key">Ctrl/Cmd + K</span> - 打开搜索</p>
+                <p><span class="shortcut-key">ESC</span> - 关闭所有弹窗（搜索、菜单、收藏夹）</p>
+                <p><span class="shortcut-key">Ctrl/Cmd + /</span> - 打开移动菜单（仅移动端）</p>
+            </div>
+        </div>
+
+        <!-- 技术说明 -->
+        <div class="guide-section">
+            <h2><span class="feature-icon">🔧</span> 技术说明</h2>
+            <h3>100% 免费开源</h3>
+            <p>所有功能均使用原生技术实现，无需任何付费服务：</p>
+            <ul>
+                <li>✅ 纯 JavaScript（无框架依赖）</li>
+                <li>✅ CSS3 动画和变量</li>
+                <li>✅ HTML5 API</li>
+                <li>✅ 浏览器本地存储（localStorage）</li>
+            </ul>
+            <h3>浏览器兼容性</h3>
+            <p>支持所有现代浏览器：Chrome 90+, Firefox 88+, Safari 14+, Edge 90+</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link">← 返回首页开始探索</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 中国百年国耻历史项目 | 以史为鉴，珍爱和平 🕊️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+    <script>
+        // 功能指南页面的多语言翻译
+        const guideTranslations = {
+            zh: {
+                pageTitle: '新功能快速指南',
+                pageSubtitle: '探索8个全新的免费功能，提升您的浏览体验',
+                stat1: '新增功能',
+                stat2: '快捷键',
+                stat3: '主题选择',
+                stat4: '免费开源',
+                
+                feature1Title: '移动端汉堡菜单',
+                feature1Desc: '在移动设备上，导航菜单会自动隐藏，点击右上角的三条横线图标即可打开。',
+                feature1Point1: '流畅的滑入滑出动画',
+                feature1Point2: '包含所有导航链接和语言切换',
+                feature1Point3: '点击菜单项自动关闭并跳转',
+                
+                feature2Title: '返回顶部按钮',
+                feature2Desc: '当您向下滚动超过300像素时，右下角会出现一个向上箭头按钮。',
+                feature2Demo: '使用方法：',
+                feature2DemoText: '点击按钮即可平滑滚动回页面顶部',
+                
+                feature3Title: '深色/浅色主题切换',
+                feature3Desc: '点击导航栏右侧的月亮🌙或太阳☀️图标，在深色和浅色主题之间切换。',
+                feature3Sub: '主题特点：',
+                feature3Point1: '深色主题（默认）：',
+                feature3Point1Text: '黑绿科技风格，护眼舒适',
+                feature3Point2: '浅色主题：',
+                feature3Point2Text: '白绿清新风格，明亮清晰',
+                feature3Point3: '主题偏好自动保存，下次访问时自动应用',
+                
+                feature4Title: 'Toast 通知系统',
+                feature4Desc: '优雅的消息提示，在您进行操作时提供即时反馈。',
+                feature4Sub: '通知类型：',
+                feature4Point1: '✓ 成功通知（绿色边框）',
+                feature4Point2: '✗ 错误通知（红色边框）',
+                feature4Point3: 'ℹ 信息通知（蓝色边框）',
+                feature4Note: '通知会在3秒后自动消失，也可以点击 × 手动关闭。',
+                
+                feature5Title: '搜索功能',
+                feature5Desc: '快速查找历史事件和功能模块。',
+                feature5Demo: '打开搜索：',
+                feature5DemoLine1: '• 点击导航栏的 🔍 图标',
+                feature5DemoLine2: '• 或按',
+                feature5Sub: '搜索技巧：',
+                feature5Point1: '输入关键词即可实时显示结果',
+                feature5Point2: '支持搜索事件标题和描述',
+                feature5Point3: '点击结果自动跳转到对应位置',
+                feature5Point4: '按',
+                feature5Point4Text: '关闭搜索框',
+                
+                feature6Title: '收藏/书签功能',
+                feature6Desc: '收藏您感兴趣的历史事件，方便日后查看。',
+                feature6Sub: '如何使用：',
+                feature6Point1: '在时间线区域，每个事件右上角都有一个 ☆ 图标',
+                feature6Point2: '点击 ☆ 收藏事件，图标变为 ★',
+                feature6Point3: '点击右侧浮动的 ★ 按钮查看所有收藏',
+                feature6Point4: '在收藏夹中点击事件可快速跳转',
+                feature6Point5: '点击收藏项右上角的 × 删除单个收藏',
+                feature6Point6: '点击"清空收藏"按钮删除所有收藏',
+                feature6Tip: '提示：',
+                feature6TipText: '收藏数据保存在浏览器本地，不会丢失！',
+                
+                feature7Title: '图片懒加载',
+                feature7Desc: '图片只在进入视口时才加载，大幅提升页面加载速度。',
+                feature7Sub: '优势：',
+                feature7Point1: '减少初始加载时间',
+                feature7Point2: '节省网络带宽',
+                feature7Point3: '提升浏览体验',
+                
+                feature8Title: '键盘快捷键',
+                feature8Desc: '使用键盘快捷键，更高效地操作网站。',
+                feature8Sub: '快捷键列表：',
+                feature8Key1: '- 打开搜索',
+                feature8Key2: '- 关闭所有弹窗（搜索、菜单、收藏夹）',
+                feature8Key3: '- 打开移动菜单（仅移动端）',
+                
+                techTitle: '技术说明',
+                techSub1: '100% 免费开源',
+                techDesc1: '所有功能均使用原生技术实现，无需任何付费服务：',
+                techPoint1: '✅ 纯 JavaScript（无框架依赖）',
+                techPoint2: '✅ CSS3 动画和变量',
+                techPoint3: '✅ HTML5 API',
+                techPoint4: '✅ 浏览器本地存储（localStorage）',
+                techSub2: '浏览器兼容性',
+                techDesc2: '支持所有现代浏览器：Chrome 90+, Firefox 88+, Safari 14+, Edge 90+',
+                
+                backToHome: '← 返回首页开始探索'
+            },
+            en: {
+                pageTitle: 'New Features Quick Guide',
+                pageSubtitle: 'Explore 8 brand new free features to enhance your browsing experience',
+                stat1: 'New Features',
+                stat2: 'Shortcuts',
+                stat3: 'Theme Options',
+                stat4: 'Free & Open Source',
+                
+                feature1Title: 'Mobile Hamburger Menu',
+                feature1Desc: 'On mobile devices, the navigation menu is automatically hidden. Click the three-line icon in the top right corner to open it.',
+                feature1Point1: 'Smooth slide-in/out animations',
+                feature1Point2: 'Includes all navigation links and language switching',
+                feature1Point3: 'Automatically closes and navigates when clicking menu items',
+                
+                feature2Title: 'Back to Top Button',
+                feature2Desc: 'When you scroll down more than 300 pixels, an up arrow button appears in the bottom right corner.',
+                feature2Demo: 'How to use:',
+                feature2DemoText: 'Click the button to smoothly scroll back to the top of the page',
+                
+                feature3Title: 'Dark/Light Theme Toggle',
+                feature3Desc: 'Click the moon 🌙 or sun ☀️ icon on the right side of the navigation bar to switch between dark and light themes.',
+                feature3Sub: 'Theme Features:',
+                feature3Point1: 'Dark Theme (Default):',
+                feature3Point1Text: 'Black-green tech style, comfortable for eyes',
+                feature3Point2: 'Light Theme:',
+                feature3Point2Text: 'White-green fresh style, bright and clear',
+                feature3Point3: 'Theme preference is automatically saved and applied on next visit',
+                
+                feature4Title: 'Toast Notification System',
+                feature4Desc: 'Elegant message prompts that provide instant feedback when you perform actions.',
+                feature4Sub: 'Notification Types:',
+                feature4Point1: '✓ Success notifications (green border)',
+                feature4Point2: '✗ Error notifications (red border)',
+                feature4Point3: 'ℹ Info notifications (blue border)',
+                feature4Note: 'Notifications automatically disappear after 3 seconds, or you can manually close them by clicking ×.',
+                
+                feature5Title: 'Search Function',
+                feature5Desc: 'Quickly find historical events and feature modules.',
+                feature5Demo: 'Open Search:',
+                feature5DemoLine1: '• Click the 🔍 icon in the navigation bar',
+                feature5DemoLine2: '• Or press',
+                feature5Sub: 'Search Tips:',
+                feature5Point1: 'Results appear in real-time as you type keywords',
+                feature5Point2: 'Supports searching event titles and descriptions',
+                feature5Point3: 'Click results to automatically jump to the corresponding location',
+                feature5Point4: 'Press',
+                feature5Point4Text: 'to close the search box',
+                
+                feature6Title: 'Bookmark/Favorites Function',
+                feature6Desc: 'Bookmark historical events you\'re interested in for easy access later.',
+                feature6Sub: 'How to Use:',
+                feature6Point1: 'In the timeline area, each event has a ☆ icon in the top right corner',
+                feature6Point2: 'Click ☆ to bookmark an event, the icon changes to ★',
+                feature6Point3: 'Click the floating ★ button on the right to view all bookmarks',
+                feature6Point4: 'Click events in the bookmarks panel to quickly jump to them',
+                feature6Point5: 'Click × in the top right corner of a bookmark to delete it',
+                feature6Point6: 'Click "Clear Bookmarks" button to delete all bookmarks',
+                feature6Tip: 'Tip:',
+                feature6TipText: 'Bookmark data is saved locally in your browser and won\'t be lost!',
+                
+                feature7Title: 'Image Lazy Loading',
+                feature7Desc: 'Images only load when they enter the viewport, significantly improving page load speed.',
+                feature7Sub: 'Advantages:',
+                feature7Point1: 'Reduces initial load time',
+                feature7Point2: 'Saves network bandwidth',
+                feature7Point3: 'Improves browsing experience',
+                
+                feature8Title: 'Keyboard Shortcuts',
+                feature8Desc: 'Use keyboard shortcuts to operate the website more efficiently.',
+                feature8Sub: 'Shortcut List:',
+                feature8Key1: '- Open search',
+                feature8Key2: '- Close all popups (search, menu, bookmarks)',
+                feature8Key3: '- Open mobile menu (mobile only)',
+                
+                techTitle: 'Technical Information',
+                techSub1: '100% Free & Open Source',
+                techDesc1: 'All features are implemented using native technologies, no paid services required:',
+                techPoint1: '✅ Pure JavaScript (no framework dependencies)',
+                techPoint2: '✅ CSS3 animations and variables',
+                techPoint3: '✅ HTML5 API',
+                techPoint4: '✅ Browser local storage (localStorage)',
+                techSub2: 'Browser Compatibility',
+                techDesc2: 'Supports all modern browsers: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+',
+                
+                backToHome: '← Back to Home to Start Exploring'
+            },
+            ja: {
+                pageTitle: '新機能クイックガイド',
+                pageSubtitle: '8つの新しい無料機能を探索し、ブラウジング体験を向上させましょう',
+                stat1: '新機能',
+                stat2: 'ショートカット',
+                stat3: 'テーマオプション',
+                stat4: '無料オープンソース',
+                
+                feature1Title: 'モバイルハンバーガーメニュー',
+                feature1Desc: 'モバイルデバイスでは、ナビゲーションメニューが自動的に非表示になります。右上の三本線アイコンをクリックして開きます。',
+                feature1Point1: 'スムーズなスライドイン/アウトアニメーション',
+                feature1Point2: 'すべてのナビゲーションリンクと言語切り替えを含む',
+                feature1Point3: 'メニュー項目をクリックすると自動的に閉じてナビゲート',
+                
+                feature2Title: 'トップに戻るボタン',
+                feature2Desc: '300ピクセル以上下にスクロールすると、右下に上向き矢印ボタンが表示されます。',
+                feature2Demo: '使用方法：',
+                feature2DemoText: 'ボタンをクリックすると、ページの上部にスムーズにスクロールします',
+                
+                feature3Title: 'ダーク/ライトテーマ切り替え',
+                feature3Desc: 'ナビゲーションバーの右側にある月🌙または太陽☀️アイコンをクリックして、ダークテーマとライトテーマを切り替えます。',
+                feature3Sub: 'テーマの特徴：',
+                feature3Point1: 'ダークテーマ（デフォルト）：',
+                feature3Point1Text: '黒緑のテックスタイル、目に優しい',
+                feature3Point2: 'ライトテーマ：',
+                feature3Point2Text: '白緑の爽やかなスタイル、明るく鮮明',
+                feature3Point3: 'テーマの設定は自動的に保存され、次回訪問時に適用されます',
+                
+                feature4Title: 'トースト通知システム',
+                feature4Desc: '操作時に即座にフィードバックを提供する優雅なメッセージプロンプト。',
+                feature4Sub: '通知タイプ：',
+                feature4Point1: '✓ 成功通知（緑の枠線）',
+                feature4Point2: '✗ エラー通知（赤の枠線）',
+                feature4Point3: 'ℹ 情報通知（青の枠線）',
+                feature4Note: '通知は3秒後に自動的に消えますが、×をクリックして手動で閉じることもできます。',
+                
+                feature5Title: '検索機能',
+                feature5Desc: '歴史的イベントや機能モジュールを素早く検索。',
+                feature5Demo: '検索を開く：',
+                feature5DemoLine1: '• ナビゲーションバーの🔍アイコンをクリック',
+                feature5DemoLine2: '• または',
+                feature5Sub: '検索のヒント：',
+                feature5Point1: 'キーワードを入力するとリアルタイムで結果が表示されます',
+                feature5Point2: 'イベントのタイトルと説明の検索をサポート',
+                feature5Point3: '結果をクリックすると対応する場所に自動的にジャンプ',
+                feature5Point4: '',
+                feature5Point4Text: 'を押して検索ボックスを閉じる',
+                
+                feature6Title: 'ブックマーク/お気に入り機能',
+                feature6Desc: '興味のある歴史的イベントをブックマークして、後で簡単にアクセスできます。',
+                feature6Sub: '使用方法：',
+                feature6Point1: 'タイムラインエリアで、各イベントの右上に☆アイコンがあります',
+                feature6Point2: '☆をクリックしてイベントをブックマーク、アイコンが★に変わります',
+                feature6Point3: '右側のフローティング★ボタンをクリックしてすべてのブックマークを表示',
+                feature6Point4: 'ブックマークパネルのイベントをクリックして素早くジャンプ',
+                feature6Point5: 'ブックマークの右上の×をクリックして削除',
+                feature6Point6: '「ブックマークをクリア」ボタンをクリックしてすべて削除',
+                feature6Tip: 'ヒント：',
+                feature6TipText: 'ブックマークデータはブラウザにローカル保存され、失われません！',
+                
+                feature7Title: '画像遅延読み込み',
+                feature7Desc: '画像はビューポートに入ったときにのみ読み込まれ、ページの読み込み速度が大幅に向上します。',
+                feature7Sub: '利点：',
+                feature7Point1: '初期読み込み時間の短縮',
+                feature7Point2: 'ネットワーク帯域幅の節約',
+                feature7Point3: 'ブラウジング体験の向上',
+                
+                feature8Title: 'キーボードショートカット',
+                feature8Desc: 'キーボードショートカットを使用して、より効率的にウェブサイトを操作します。',
+                feature8Sub: 'ショートカットリスト：',
+                feature8Key1: '- 検索を開く',
+                feature8Key2: '- すべてのポップアップを閉じる（検索、メニュー、ブックマーク）',
+                feature8Key3: '- モバイルメニューを開く（モバイルのみ）',
+                
+                techTitle: '技術情報',
+                techSub1: '100%無料オープンソース',
+                techDesc1: 'すべての機能はネイティブ技術を使用して実装されており、有料サービスは不要です：',
+                techPoint1: '✅ 純粋なJavaScript（フレームワーク依存なし）',
+                techPoint2: '✅ CSS3アニメーションと変数',
+                techPoint3: '✅ HTML5 API',
+                techPoint4: '✅ ブラウザローカルストレージ（localStorage）',
+                techSub2: 'ブラウザ互換性',
+                techDesc2: 'すべてのモダンブラウザをサポート：Chrome 90+、Firefox 88+、Safari 14+、Edge 90+',
+                
+                backToHome: '← ホームに戻って探索を開始'
+            }
+        };
+
+        // 应用翻译
+        function applyGuideTranslation(lang) {
+            const t = guideTranslations[lang];
+            if (!t) return;
+
+            // 更新页面标题
+            document.querySelector('.guide-header h1').textContent = '🎉 ' + t.pageTitle;
+            document.querySelector('.guide-header p').textContent = t.pageSubtitle;
+
+            // 更新统计数据
+            const statLabels = document.querySelectorAll('.stat-label');
+            if (statLabels[0]) statLabels[0].textContent = t.stat1;
+            if (statLabels[1]) statLabels[1].textContent = t.stat2;
+            if (statLabels[2]) statLabels[2].textContent = t.stat3;
+            if (statLabels[3]) statLabels[3].textContent = t.stat4;
+
+            // 更新所有功能区块
+            const sections = document.querySelectorAll('.guide-section');
+            
+            // 功能1：移动端汉堡菜单
+            if (sections[0]) {
+                sections[0].querySelector('h2').innerHTML = '<span class="feature-icon">📱</span> ' + t.feature1Title;
+                const ps = sections[0].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature1Desc;
+                const h3s = sections[0].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = '特点：';
+                const lis = sections[0].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.feature1Point1;
+                if (lis[1]) lis[1].textContent = t.feature1Point2;
+                if (lis[2]) lis[2].textContent = t.feature1Point3;
+            }
+
+            // 功能2：返回顶部
+            if (sections[1]) {
+                sections[1].querySelector('h2').innerHTML = '<span class="feature-icon">⬆️</span> ' + t.feature2Title;
+                const ps = sections[1].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature2Desc;
+                const strong = sections[1].querySelector('strong');
+                if (strong) strong.textContent = t.feature2Demo;
+                const demoBox = sections[1].querySelector('.demo-box');
+                if (demoBox) {
+                    demoBox.innerHTML = '<strong>' + t.feature2Demo + '</strong> ' + t.feature2DemoText;
+                }
+            }
+
+            // 功能3：主题切换
+            if (sections[2]) {
+                sections[2].querySelector('h2').innerHTML = '<span class="feature-icon">🌓</span> ' + t.feature3Title;
+                const ps = sections[2].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature3Desc;
+                const h3s = sections[2].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature3Sub;
+                const lis = sections[2].querySelectorAll('li');
+                if (lis[0]) lis[0].innerHTML = '<strong>' + t.feature3Point1 + '</strong>' + t.feature3Point1Text;
+                if (lis[1]) lis[1].innerHTML = '<strong>' + t.feature3Point2 + '</strong>' + t.feature3Point2Text;
+                if (lis[2]) lis[2].textContent = t.feature3Point3;
+            }
+
+            // 功能4：Toast通知
+            if (sections[3]) {
+                sections[3].querySelector('h2').innerHTML = '<span class="feature-icon">🔔</span> ' + t.feature4Title;
+                const ps = sections[3].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature4Desc;
+                if (ps[1]) ps[1].textContent = t.feature4Note;
+                const h3s = sections[3].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature4Sub;
+                const lis = sections[3].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.feature4Point1;
+                if (lis[1]) lis[1].textContent = t.feature4Point2;
+                if (lis[2]) lis[2].textContent = t.feature4Point3;
+            }
+
+            // 功能5：搜索
+            if (sections[4]) {
+                sections[4].querySelector('h2').innerHTML = '<span class="feature-icon">🔍</span> ' + t.feature5Title;
+                const ps = sections[4].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature5Desc;
+                const h3s = sections[4].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature5Sub;
+                const demoBox = sections[4].querySelector('.demo-box');
+                if (demoBox) {
+                    demoBox.innerHTML = '<strong>' + t.feature5Demo + '</strong><br>' + 
+                        t.feature5DemoLine1 + '<br>' + 
+                        t.feature5DemoLine2 + ' <span class="shortcut-key">Ctrl + K</span> (Mac: <span class="shortcut-key">Cmd + K</span>)';
+                }
+                const lis = sections[4].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.feature5Point1;
+                if (lis[1]) lis[1].textContent = t.feature5Point2;
+                if (lis[2]) lis[2].textContent = t.feature5Point3;
+                if (lis[3]) lis[3].innerHTML = t.feature5Point4 + ' <span class="shortcut-key">ESC</span> ' + t.feature5Point4Text;
+            }
+
+            // 功能6：收藏
+            if (sections[5]) {
+                sections[5].querySelector('h2').innerHTML = '<span class="feature-icon">⭐</span> ' + t.feature6Title;
+                const ps = sections[5].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature6Desc;
+                const h3s = sections[5].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature6Sub;
+                const lis = sections[5].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.feature6Point1;
+                if (lis[1]) lis[1].textContent = t.feature6Point2;
+                if (lis[2]) lis[2].textContent = t.feature6Point3;
+                if (lis[3]) lis[3].textContent = t.feature6Point4;
+                if (lis[4]) lis[4].textContent = t.feature6Point5;
+                if (lis[5]) lis[5].textContent = t.feature6Point6;
+                const demoBox = sections[5].querySelector('.demo-box');
+                if (demoBox) {
+                    demoBox.innerHTML = '<strong>' + t.feature6Tip + '</strong> ' + t.feature6TipText;
+                }
+            }
+
+            // 功能7：懒加载
+            if (sections[6]) {
+                sections[6].querySelector('h2').innerHTML = '<span class="feature-icon">🖼️</span> ' + t.feature7Title;
+                const ps = sections[6].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature7Desc;
+                const h3s = sections[6].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature7Sub;
+                const lis = sections[6].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.feature7Point1;
+                if (lis[1]) lis[1].textContent = t.feature7Point2;
+                if (lis[2]) lis[2].textContent = t.feature7Point3;
+            }
+
+            // 功能8：快捷键
+            if (sections[7]) {
+                sections[7].querySelector('h2').innerHTML = '<span class="feature-icon">⌨️</span> ' + t.feature8Title;
+                const ps = sections[7].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.feature8Desc;
+                const h3s = sections[7].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.feature8Sub;
+                const demoBox = sections[7].querySelector('.demo-box');
+                if (demoBox) {
+                    demoBox.innerHTML = '<h3 style="margin-top: 0;">' + t.feature8Sub + '</h3>' +
+                        '<p><span class="shortcut-key">Ctrl/Cmd + K</span> ' + t.feature8Key1 + '</p>' +
+                        '<p><span class="shortcut-key">ESC</span> ' + t.feature8Key2 + '</p>' +
+                        '<p><span class="shortcut-key">Ctrl/Cmd + /</span> ' + t.feature8Key3 + '</p>';
+                }
+            }
+
+            // 功能9：技术说明
+            if (sections[8]) {
+                sections[8].querySelector('h2').innerHTML = '<span class="feature-icon">🔧</span> ' + t.techTitle;
+                const h3s = sections[8].querySelectorAll('h3');
+                if (h3s[0]) h3s[0].textContent = t.techSub1;
+                if (h3s[1]) h3s[1].textContent = t.techSub2;
+                const ps = sections[8].querySelectorAll('p');
+                if (ps[0]) ps[0].textContent = t.techDesc1;
+                if (ps[1]) ps[1].textContent = t.techDesc2;
+                const lis = sections[8].querySelectorAll('li');
+                if (lis[0]) lis[0].textContent = t.techPoint1;
+                if (lis[1]) lis[1].textContent = t.techPoint2;
+                if (lis[2]) lis[2].textContent = t.techPoint3;
+                if (lis[3]) lis[3].textContent = t.techPoint4;
+            }
+
+            // 更新返回首页链接
+            const backLink = document.querySelector('.back-link');
+            if (backLink) backLink.textContent = t.backToHome;
+
+            // 保存语言偏好
+            localStorage.setItem('guideLanguage', lang);
+        }
+
+        // 监听语言切换
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                applyGuideTranslation(lang);
+            });
+        });
+
+        // 加载保存的语言
+        const savedLang = localStorage.getItem('guideLanguage') || localStorage.getItem('preferredLanguage') || 'zh';
+        setTimeout(() => {
+            applyGuideTranslation(savedLang);
+        }, 100);
+    </script>
+</body>
+</html>
