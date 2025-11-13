@@ -1,0 +1,585 @@
+{
+  "title": "中国百年国耻时间线 (1839-1949)",
+  "subtitle": "China's Century of Humiliation Timeline",
+  "events": [
+    {
+      "id": "opium-war-1",
+      "year": 1839,
+      "endYear": 1842,
+      "title": {
+        "zh": "第一次鸦片战争",
+        "en": "First Opium War",
+        "ja": "第一次アヘン戦争"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "英国因鸦片贸易问题发动侵华战争，清朝战败，被迫签订《南京条约》，割让香港，开放五口通商。",
+        "en": "Britain launched an invasion of China over opium trade issues. Qing defeat led to the Treaty of Nanking, ceding Hong Kong and opening five ports.",
+        "ja": "イギリスがアヘン貿易問題で中国侵略戦争を開始。清朝敗北、南京条約により香港割譲、五港開港。"
+      },
+      "consequences": [
+        "Treaty of Nanking (1842)",
+        "Hong Kong ceded to Britain",
+        "Five ports opened",
+        "Beginning of unequal treaties"
+      ],
+      "link": "docs/en/events/opium-wars.md"
+    },
+    {
+      "id": "taiping-rebellion",
+      "year": 1850,
+      "endYear": 1864,
+      "title": {
+        "zh": "太平天国运动",
+        "en": "Taiping Rebellion",
+        "ja": "太平天国の乱"
+      },
+      "category": "rebellion",
+      "importance": "critical",
+      "description": {
+        "zh": "洪秀全领导的大规模农民起义，建立太平天国政权，几乎推翻清朝统治，造成2000-3000万人死亡。",
+        "en": "Massive peasant uprising led by Hong Xiuquan, establishing the Taiping Heavenly Kingdom. Nearly overthrew Qing rule, causing 20-30 million deaths.",
+        "ja": "洪秀全率いる大規模農民蜂起。太平天国政権を樹立、清朝支配をほぼ転覆、2000-3000万人が死亡。"
+      },
+      "consequences": [
+        "20-30 million deaths",
+        "Massive social disruption",
+        "Weakened Qing Dynasty",
+        "Rise of regional armies"
+      ],
+      "link": "docs/en/events/taiping-rebellion.md"
+    },
+    {
+      "id": "opium-war-2",
+      "year": 1856,
+      "endYear": 1860,
+      "title": {
+        "zh": "第二次鸦片战争",
+        "en": "Second Opium War",
+        "ja": "第二次アヘン戦争"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "英法联军侵华，火烧圆明园，签订《北京条约》，割让九龙半岛，开放更多口岸。",
+        "en": "Anglo-French forces invaded China, burned the Summer Palace. Treaty of Beijing resulted in more territorial and trade concessions.",
+        "ja": "英仏連合軍が中国侵略、円明園焼失。北京条約により九龍半島割譲、更なる開港。"
+      },
+      "consequences": [
+        "Summer Palace burned",
+        "Kowloon ceded to Britain",
+        "More ports opened",
+        "Russian territorial gains"
+      ],
+      "link": "docs/en/events/opium-wars.md"
+    },
+    {
+      "id": "self-strengthening",
+      "year": 1861,
+      "endYear": 1895,
+      "title": {
+        "zh": "洋务运动",
+        "en": "Self-Strengthening Movement",
+        "ja": "洋務運動"
+      },
+      "category": "reform",
+      "importance": "major",
+      "description": {
+        "zh": "清朝官员推动的现代化改革运动，引进西方军事技术和工业，提出'中体西用'理念。",
+        "en": "Modernization reforms led by Qing officials, introducing Western military technology and industry under 'Chinese learning, Western utility' principle.",
+        "ja": "清朝官僚による近代化改革運動。西洋軍事技術と工業を導入、'中体西用'理念を提唱。"
+      },
+      "consequences": [
+        "Modern arsenals established",
+        "Beiyang Fleet created",
+        "Limited industrialization",
+        "Failed to transform institutions"
+      ],
+      "link": "docs/en/events/self-strengthening-movement.md"
+    },
+    {
+      "id": "sino-french-war",
+      "year": 1884,
+      "endYear": 1885,
+      "title": {
+        "zh": "中法战争",
+        "en": "Sino-French War",
+        "ja": "清仏戦争"
+      },
+      "category": "war",
+      "importance": "major",
+      "description": {
+        "zh": "法国侵略越南和中国，清朝虽有胜仗但最终承认法国对越南的保护权。",
+        "en": "French aggression against Vietnam and China. Despite some victories, Qing recognized French protectorate over Vietnam.",
+        "ja": "フランスがベトナムと中国を侵略。清朝は勝利もあったが、最終的にベトナムに対するフランスの保護権を承認。"
+      },
+      "consequences": [
+        "Lost Vietnam as tributary",
+        "French sphere of influence",
+        "Weakened Qing prestige"
+      ],
+      "link": "docs/en/events/sino-japanese-war.md"
+    },
+    {
+      "id": "sino-japanese-war",
+      "year": 1894,
+      "endYear": 1895,
+      "title": {
+        "zh": "甲午中日战争",
+        "en": "First Sino-Japanese War",
+        "ja": "日清戦争"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "日本侵略朝鲜和中国，北洋水师全军覆没，清朝惨败，签订《马关条约》，失去台湾和朝鲜。",
+        "en": "Japan invaded Korea and China, destroying the Beiyang Fleet. Treaty of Shimonoseki resulted in loss of Taiwan and Korea.",
+        "ja": "日本が朝鮮と中国を侵略、北洋艦隊壊滅。下関条約により台湾と朝鮮を喪失。"
+      },
+      "consequences": [
+        "Taiwan ceded to Japan",
+        "Korea lost as tributary",
+        "Massive indemnity",
+        "Exposed Qing weakness"
+      ],
+      "link": "docs/en/events/sino-japanese-war.md"
+    },
+    {
+      "id": "scramble-concessions",
+      "year": 1897,
+      "endYear": 1898,
+      "title": {
+        "zh": "列强瓜分中国狂潮",
+        "en": "Scramble for Concessions",
+        "ja": "列強による分割競争"
+      },
+      "category": "imperialism",
+      "importance": "major",
+      "description": {
+        "zh": "德、俄、英、法等国在中国强占租借地，划分势力范围，中国面临被瓜分危险。",
+        "en": "Germany, Russia, Britain, France seized territories and carved out spheres of influence. China faced partition.",
+        "ja": "ドイツ、ロシア、イギリス、フランスなどが中国で租借地を強奪、勢力圏を分割。中国は分割の危機に。"
+      },
+      "consequences": [
+        "Foreign spheres of influence",
+        "Leased territories",
+        "Loss of sovereignty",
+        "National crisis"
+      ],
+      "link": "docs/en/treaties.md"
+    },
+    {
+      "id": "hundred-days-reform",
+      "year": 1898,
+      "endYear": 1898,
+      "title": {
+        "zh": "百日维新",
+        "en": "Hundred Days' Reform",
+        "ja": "戊戌変法"
+      },
+      "category": "reform",
+      "importance": "major",
+      "description": {
+        "zh": "光绪帝和康有为、梁启超推动的维新变法运动，103天后被慈禧太后镇压，六君子遇害。",
+        "en": "Reform movement by Guangxu Emperor, Kang Youwei, and Liang Qichao. Crushed by Empress Dowager Cixi after 103 days.",
+        "ja": "光緒帝と康有為、梁啓超による変法運動。103日後に西太后により粉砕、六君子処刑。"
+      },
+      "consequences": [
+        "Reform crushed",
+        "Six Gentlemen executed",
+        "Guangxu imprisoned",
+        "Conservative backlash"
+      ],
+      "link": "docs/en/events/hundred-days-reform.md"
+    },
+    {
+      "id": "boxer-rebellion",
+      "year": 1899,
+      "endYear": 1901,
+      "title": {
+        "zh": "义和团运动与八国联军",
+        "en": "Boxer Rebellion",
+        "ja": "義和団事件"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "义和团反洋教运动，慈禧支持向列强宣战，八国联军攻占北京，签订《辛丑条约》，赔款4.5亿两白银。",
+        "en": "Boxer anti-foreign movement. Eight-Nation Alliance captured Beijing. Boxer Protocol imposed massive 450 million tael indemnity.",
+        "ja": "義和団による排外運動。八カ国連合軍が北京占領。辛丑条約により4.5億両の賠償金。"
+      },
+      "consequences": [
+        "450 million tael indemnity",
+        "Foreign troops in Beijing",
+        "Qing legitimacy damaged",
+        "National humiliation"
+      ],
+      "link": "docs/en/events/boxer-rebellion.md"
+    },
+    {
+      "id": "russo-japanese-war",
+      "year": 1904,
+      "endYear": 1905,
+      "title": {
+        "zh": "日俄战争（在中国东北）",
+        "en": "Russo-Japanese War (in Manchuria)",
+        "ja": "日露戦争（満洲にて）"
+      },
+      "category": "war",
+      "importance": "major",
+      "description": {
+        "zh": "日本和俄国在中国东北土地上开战，中国宣布中立但无法保护领土主权。",
+        "en": "Japan and Russia fought war on Chinese territory in Manchuria. China declared neutrality but couldn't protect sovereignty.",
+        "ja": "日本とロシアが中国東北部で戦争。中国は中立を宣言したが主権を守れず。"
+      },
+      "consequences": [
+        "Foreign war on Chinese soil",
+        "Japanese dominance in Manchuria",
+        "Chinese sovereignty violated",
+        "National humiliation"
+      ],
+      "link": "docs/en/impact.md"
+    },
+    {
+      "id": "xinhai-revolution",
+      "year": 1911,
+      "endYear": 1912,
+      "title": {
+        "zh": "辛亥革命",
+        "en": "Xinhai Revolution",
+        "ja": "辛亥革命"
+      },
+      "category": "revolution",
+      "importance": "critical",
+      "description": {
+        "zh": "孙中山领导的革命推翻清朝，建立中华民国，结束两千年帝制，但未能完全改变中国半殖民地地位。",
+        "en": "Sun Yat-sen led revolution overthrew Qing Dynasty, established Republic of China, ending 2000 years of imperial rule.",
+        "ja": "孫文率いる革命が清朝を打倒、中華民国樹立。2000年の帝政を終結。"
+      },
+      "consequences": [
+        "Qing Dynasty ended",
+        "Republic established",
+        "Imperial system abolished",
+        "Political instability began"
+      ],
+      "link": "docs/en/events/xinhai-revolution.md"
+    },
+    {
+      "id": "twenty-one-demands",
+      "year": 1915,
+      "endYear": 1915,
+      "title": {
+        "zh": "二十一条",
+        "en": "Twenty-One Demands",
+        "ja": "対華二十一カ条要求"
+      },
+      "category": "imperialism",
+      "importance": "major",
+      "description": {
+        "zh": "日本向袁世凯政府提出二十一条要求，企图将中国变为保护国，引发全国反日运动。",
+        "en": "Japan presented Twenty-One Demands to Yuan Shikai's government, attempting to make China a protectorate.",
+        "ja": "日本が袁世凱政府に二十一カ条要求を提示、中国を保護国化しようと企図。"
+      },
+      "consequences": [
+        "Japanese expansion in China",
+        "National Day of Humiliation",
+        "Anti-Japanese sentiment",
+        "Patriotic movements"
+      ],
+      "link": "docs/en/treaties.md"
+    },
+    {
+      "id": "new-culture-movement",
+      "year": 1915,
+      "endYear": 1920,
+      "title": {
+        "zh": "新文化运动",
+        "en": "New Culture Movement",
+        "ja": "新文化運動"
+      },
+      "category": "cultural",
+      "importance": "major",
+      "description": {
+        "zh": "陈独秀、胡适、鲁迅等知识分子发起的思想文化革命，提倡科学与民主，反对传统文化。",
+        "en": "Intellectual revolution led by Chen Duxiu, Hu Shi, Lu Xun promoting science, democracy, and vernacular Chinese.",
+        "ja": "陳独秀、胡適、魯迅らによる思想文化革命。科学と民主主義を提唱、伝統文化に反対。"
+      },
+      "consequences": [
+        "Cultural modernization",
+        "Vernacular Chinese promoted",
+        "Individual liberation",
+        "Foundation for May Fourth"
+      ],
+      "link": "docs/en/events/new-culture-movement.md"
+    },
+    {
+      "id": "may-fourth-movement",
+      "year": 1919,
+      "endYear": 1919,
+      "title": {
+        "zh": "五四运动",
+        "en": "May Fourth Movement",
+        "ja": "五・四運動"
+      },
+      "category": "movement",
+      "importance": "critical",
+      "description": {
+        "zh": "学生抗议巴黎和会将山东权益转给日本，爆发全国性反帝爱国运动，开启中国现代革命。",
+        "en": "Student protests against Versailles Treaty transferring Shandong to Japan. Sparked nationwide anti-imperialist movement.",
+        "ja": "ヴェルサイユ条約で山東を日本に譲渡することへの学生抗議。全国的反帝国主義運動に発展。"
+      },
+      "consequences": [
+        "Mass nationalist movement",
+        "Anti-imperialist awakening",
+        "Cultural revolution",
+        "Foundation for CCP"
+      ],
+      "link": "docs/en/events/may-fourth-movement.md"
+    },
+    {
+      "id": "ccp-founded",
+      "year": 1921,
+      "endYear": 1921,
+      "title": {
+        "zh": "中国共产党成立",
+        "en": "Chinese Communist Party Founded",
+        "ja": "中国共産党創立"
+      },
+      "category": "political",
+      "importance": "critical",
+      "description": {
+        "zh": "陈独秀、李大钊等在上海成立中国共产党，开启中国共产主义革命道路。",
+        "en": "Chen Duxiu, Li Dazhao and others founded the Chinese Communist Party in Shanghai.",
+        "ja": "陳独秀、李大釗らが上海で中国共産党を創立。"
+      },
+      "consequences": [
+        "Communist movement began",
+        "Revolutionary alternative",
+        "Worker-peasant mobilization",
+        "Path to 1949 victory"
+      ],
+      "link": "docs/en/events/may-fourth-movement.md"
+    },
+    {
+      "id": "northern-expedition",
+      "year": 1926,
+      "endYear": 1928,
+      "title": {
+        "zh": "北伐战争",
+        "en": "Northern Expedition",
+        "ja": "北伐"
+      },
+      "category": "war",
+      "importance": "major",
+      "description": {
+        "zh": "国民革命军北伐，推翻北洋军阀统治，但国共合作破裂，内战爆发。",
+        "en": "National Revolutionary Army's Northern Expedition defeated warlords, but KMT-CCP alliance broke, civil war began.",
+        "ja": "国民革命軍の北伐により軍閥打倒。しかし国共合作崩壊、内戦勃発。"
+      },
+      "consequences": [
+        "Warlords defeated",
+        "Nanjing government established",
+        "KMT-CCP split",
+        "Civil war began"
+      ],
+      "link": "docs/en/impact.md"
+    },
+    {
+      "id": "manchurian-incident",
+      "year": 1931,
+      "endYear": 1931,
+      "title": {
+        "zh": "九一八事变",
+        "en": "Mukden Incident",
+        "ja": "満洲事変"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "日本关东军制造事端侵占中国东北，建立伪满洲国，中国开始局部抗战。",
+        "en": "Japanese Kwantung Army invaded and occupied Manchuria, establishing puppet state of Manchukuo.",
+        "ja": "日本関東軍が満洲を侵略占領、傀儡国家満洲国を樹立。"
+      },
+      "consequences": [
+        "Manchuria occupied",
+        "Manchukuo established",
+        "League of Nations failed",
+        "Prelude to full war"
+      ],
+      "link": "docs/en/events/second-sino-japanese-war.md"
+    },
+    {
+      "id": "long-march",
+      "year": 1934,
+      "endYear": 1935,
+      "title": {
+        "zh": "红军长征",
+        "en": "Long March",
+        "ja": "長征"
+      },
+      "category": "military",
+      "importance": "major",
+      "description": {
+        "zh": "中国工农红军战略转移，行程两万五千里，毛泽东确立领导地位。",
+        "en": "Red Army's strategic retreat covering 25,000 li (12,500 km). Mao Zedong emerged as leader.",
+        "ja": "紅軍の戦略的転進、二万五千里行軍。毛沢東が指導者として台頭。"
+      },
+      "consequences": [
+        "CCP survived",
+        "Mao's leadership established",
+        "Base in Yan'an",
+        "Foundation for victory"
+      ],
+      "link": "docs/en/impact.md"
+    },
+    {
+      "id": "sino-japanese-war",
+      "year": 1937,
+      "endYear": 1945,
+      "title": {
+        "zh": "全面抗日战争",
+        "en": "Second Sino-Japanese War",
+        "ja": "日中戦争"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "日本全面侵华，中国军民浴血抗战八年，付出巨大牺牲，最终取得胜利。",
+        "en": "Full-scale Japanese invasion of China. Eight-year war of resistance ended in Chinese victory in 1945.",
+        "ja": "日本の全面的中国侵略。八年間の抗戦の末、1945年に中国勝利。"
+      },
+      "consequences": [
+        "20-35 million Chinese deaths",
+        "Nanjing Massacre",
+        "Allied victory 1945",
+        "End of Century of Humiliation"
+      ],
+      "link": "docs/en/events/second-sino-japanese-war.md"
+    },
+    {
+      "id": "civil-war",
+      "year": 1946,
+      "endYear": 1949,
+      "title": {
+        "zh": "解放战争",
+        "en": "Chinese Civil War",
+        "ja": "国共内戦"
+      },
+      "category": "war",
+      "importance": "critical",
+      "description": {
+        "zh": "国共内战全面爆发，共产党最终取得胜利，1949年成立中华人民共和国。",
+        "en": "Full-scale civil war between KMT and CCP. Communist victory led to establishment of PRC in 1949.",
+        "ja": "国民党と共産党の全面内戦。共産党勝利、1949年に中華人民共和国成立。"
+      },
+      "consequences": [
+        "CCP victory",
+        "PRC established 1949",
+        "KMT retreated to Taiwan",
+        "New era began"
+      ],
+      "link": "docs/en/impact.md"
+    },
+    {
+      "id": "prc-founded",
+      "year": 1949,
+      "endYear": 1949,
+      "title": {
+        "zh": "中华人民共和国成立",
+        "en": "People's Republic of China Founded",
+        "ja": "中華人民共和国成立"
+      },
+      "category": "political",
+      "importance": "critical",
+      "description": {
+        "zh": "1949年10月1日，毛泽东在天安门宣布中华人民共和国成立，百年国耻时代结束。",
+        "en": "October 1, 1949, Mao Zedong proclaimed the founding of the People's Republic of China, ending the Century of Humiliation.",
+        "ja": "1949年10月1日、毛沢東が天安門で中華人民共和国成立を宣言。屈辱の世紀が終結。"
+      },
+      "consequences": [
+        "Century of Humiliation ended",
+        "National independence restored",
+        "Socialist transformation began",
+        "New China era"
+      ],
+      "link": "docs/en/impact.md"
+    }
+  ],
+  "categories": {
+    "war": {
+      "zh": "战争",
+      "en": "War",
+      "ja": "戦争",
+      "color": "#dc2626"
+    },
+    "rebellion": {
+      "zh": "起义",
+      "en": "Rebellion",
+      "ja": "反乱",
+      "color": "#ea580c"
+    },
+    "reform": {
+      "zh": "改革",
+      "en": "Reform",
+      "ja": "改革",
+      "color": "#2563eb"
+    },
+    "imperialism": {
+      "zh": "帝国主义",
+      "en": "Imperialism",
+      "ja": "帝国主義",
+      "color": "#7c3aed"
+    },
+    "revolution": {
+      "zh": "革命",
+      "en": "Revolution",
+      "ja": "革命",
+      "color": "#dc2626"
+    },
+    "cultural": {
+      "zh": "文化运动",
+      "en": "Cultural Movement",
+      "ja": "文化運動",
+      "color": "#059669"
+    },
+    "movement": {
+      "zh": "运动",
+      "en": "Movement",
+      "ja": "運動",
+      "color": "#0891b2"
+    },
+    "political": {
+      "zh": "政治",
+      "en": "Political",
+      "ja": "政治",
+      "color": "#4f46e5"
+    },
+    "military": {
+      "zh": "军事",
+      "en": "Military",
+      "ja": "軍事",
+      "color": "#b91c1c"
+    }
+  },
+  "importance": {
+    "critical": {
+      "zh": "关键事件",
+      "en": "Critical Event",
+      "ja": "重要事件",
+      "size": "large"
+    },
+    "major": {
+      "zh": "重大事件",
+      "en": "Major Event",
+      "ja": "主要事件",
+      "size": "medium"
+    },
+    "significant": {
+      "zh": "重要事件",
+      "en": "Significant Event",
+      "ja": "顕著な事件",
+      "size": "small"
+    }
+  }
+}

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间线动画 | Timeline Animation | タイムラインアニメーション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .language-btn {
+            padding: 6px 12px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background: white;
+            color: #1e40af;
+        }
+
+        .language-btn.active {
+            background: white;
+            color: #1e40af;
+        }
+
+        .play-btn {
+            padding: 10px 24px;
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .play-btn:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        .timeline-container {
+            margin-top: 100px;
+            padding: 40px 20px;
+            position: relative;
+            min-height: calc(100vh - 100px);
+        }
+
+        .timeline-path {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            transform: translateX(-50%);
+        }
+
+        .progress-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 0%;
+            background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+            transform: translateX(-50%);
+            transition: height 1s ease;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+        }
+
+        .timeline-event {
+            position: relative;
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .timeline-event.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-event.left .event-content {
+            margin-right: 52%;
+            text-align: right;
+        }
+
+        .timeline-event.right .event-content {
+            margin-left: 52%;
+            text-align: left;
+        }
+
+        .event-marker {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fbbf24;
+            border: 5px solid #0f172a;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 30px rgba(251, 191, 36, 0.8);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.2);
+                box-shadow: 0 0 50px rgba(251, 191, 36, 1);
+            }
+        }
+
+        .event-content {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 2px solid #475569;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .event-year {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .event-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #f1f5f9;
+        }
+
+        .event-category {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-war { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .category-treaty { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .category-reform { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .category-revolution { background: linear-gradient(135deg, #dc2626, #991b1b); }
+        .category-cultural { background: linear-gradient(135deg, #059669, #047857); }
+        .category-movement { background: linear-gradient(135deg, #0891b2, #0e7490); }
+
+        .event-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+
+        .event-impact {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .event-impact h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
+
+        .event-impact ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .event-impact li {
+            padding: 6px 0;
+            padding-left: 24px;
+            position: relative;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .event-impact li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .year-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15rem;
+            font-weight: 900;
+            color: rgba(251, 191, 36, 0.05);
+            z-index: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+
+        .speed-control {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.9);
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .speed-btn {
+            padding: 8px 16px;
+            background: #334155;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .speed-btn:hover {
+            background: #475569;
+        }
+
+        .speed-btn.active {
+            background: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .timeline-event.left .event-content,
+            .timeline-event.right .event-content {
+                margin-left: 50px;
+                margin-right: 0;
+                text-align: left;
+            }
+
+            .event-marker {
+                left: 20px;
+            }
+
+            .timeline-path, .progress-line {
+                left: 20px;
+            }
+
+            .year-indicator {
+                font-size: 8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="pageTitle">时间线动画 - 中国百年国耻历程 (1839-1949)</h1>
+        <div class="controls">
+            <div class="language-selector">
+                <button class="language-btn active" data-lang="zh">中文</button>
+                <button class="language-btn" data-lang="en">English</button>
+                <button class="language-btn" data-lang="ja">日本語</button>
+            </div>
+            <button class="play-btn" id="playBtn">
+                <span>▶</span>
+                <span id="playText">播放动画</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="year-indicator" id="yearIndicator">1839</div>
+
+    <div class="timeline-container">
+        <div class="timeline-path"></div>
+        <div class="progress-line" id="progressLine"></div>
+        <div id="timelineEvents"></div>
+    </div>
+
+    <div class="speed-control">
+        <span id="speedLabel">速度:</span>
+        <button class="speed-btn" data-speed="0.5">慢速</button>
+        <button class="speed-btn active" data-speed="1">正常</button>
+        <button class="speed-btn" data-speed="2">快速</button>
+    </div>
+
+    <script src="timeline-animation.js"></script>
+</body>
+</html>
